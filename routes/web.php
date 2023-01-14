@@ -41,3 +41,13 @@ Route::get('/users/{name}/{lname}', function($name,$lname){
 Route::get('/about/foobarbee',[AboutController::class,'index'])->name('about')->middleware('check');
 Route::get('/admin',[AdminController::class,'index'])->name('admin')->middleware('check');
 Route::get('/member',[MemberController::class,'index']);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
